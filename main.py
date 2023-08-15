@@ -45,5 +45,23 @@ def getPosts():
 
 # Get single post {id}
 @app.get("/posts/{id}", tags=["posts"])
-def getPost():
-    return {"data": posts}
+def getPost(id: int):
+    if id > len(posts):
+        return {
+            "error": 'post with ID: "{id}" does not exist',
+        }
+
+    for post in posts:
+        if post["id"] == id:
+            return {"data": post}
+
+
+# post a post
+@app.post("/posts", tags=["posts"])
+def add_post(post: PostSchema):
+    post.id = len(posts) + 1
+    posts.append(post.model_dump())
+    return {"info": "Post added"}
+
+
+
