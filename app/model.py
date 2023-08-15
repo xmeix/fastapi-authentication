@@ -13,3 +13,31 @@ class PostSchema(BaseModel):
                 "content": "some content about animals",
             }
         }
+
+
+class UserSchema(BaseModel):
+    fullName: str = (Field(default=None),)
+    email: EmailStr = (Field(default=None),)
+    password: str = (Field(default=None),)
+
+    class Config:
+        the_schema = {
+            "user_demo": {
+                "fullName": "lamia",
+                "email": "lamiaboualouache@gmail.com",
+                "password": "lamia123",
+            }
+        }
+
+
+class UserLoginSchema(BaseModel):
+    email: EmailStr = (Field(default=None),)
+    password: str = (Field(default=None),)
+
+    class Config:
+        the_schema = {
+            "user_demo": {
+                "email": "lamiaboualouache@gmail.com",
+                "password": "lamia123",
+            }
+        }
