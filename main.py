@@ -1,8 +1,9 @@
 import uvicorn
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, Body, Depends
 from app.model import PostSchema, UserLoginSchema, UserSchema
 
 from app.auth.jwt_handler import signJWT
+from app.auth.jwt_bearer import jwtBearer
 
 posts = [
     {
@@ -58,7 +59,7 @@ def getPost(id: int):
 
 
 # post a post
-@app.post("/posts", tags=["posts"])
+@app.post("/posts", dependencies=[Depends(jwtBearer())], tags=["posts"])
 def add_post(post: PostSchema):
     post.id = len(posts) + 1
     posts.append(post.model_dump())
